@@ -12,84 +12,95 @@ Ensure input validation (empty name should prompt again).
 Limit incorrect attempts for invalid purpose (maximum 3 tries before stopping). 
 */
 
-
-function getVisitorDetailsPurpose() {
-    purpose = prompt("Enter your purpose of coming");
-};
-
-// check if name is correct 
-
-// check if purpose is correct - 
-function validatePurpose(purpose) {
-    pu: while (true) {
-
-        if (purpose === "") {
-            continue pu;
-        }
-
-        else if (purpose == 'i' || purpose == 'm' || purpose == 'd') {
-            console.log(`You have enter your purpose ${purpose}`);
-            console.log("You may proceed");
-        }
-
-        else {
-            console.log("You can only enter i, m, or d");
-            continue pu;
-        }
-        break;
-    }
-};
-
-
-
+let count = 0;
 
 function loop(visitorsName) {
 
-    function handleVisitor() {
+
+    function welcomeVisitor() {
         alert("Welcome");
+        console.log("WELCOME");
     };
 
-    handleVisitor();
+    welcomeVisitor();
 
     let purpose;
 
-    // take user details
+    // take user details and validate name details
     function getVisitorDetailsName() {
-        let visitorsName = prompt("Enter your name: ");
-        console.log(visitorsName);
+        visitorsName = prompt("Enter your name: ");
 
         function validateName(visitorsName) {
-            console.log(visitorsName);
 
             go: while (true) {
 
                 if (visitorsName === "") {
-                    continue go;
+                    visitorsName = prompt("Name cannot be empty. Enter your name again: ");
+                    continue;
                 }
 
                 else if (visitorsName == 'exit') {
-                    console.log("Exit")
-                    break;
+                    console.log("You have entered Exit")
+                    return false;
                 }
 
                 else {
-                    console.log(`You have enter - ${visitorsName}`)
+                    console.log(`Welcome ${visitorsName}`)
+                    return true;
                 }
+
                 break;
             }
         };
 
-        validateName();
+        return validateName(visitorsName);
     };
 
-    getVisitorDetailsName();
-
-    // ask for purpose of coming from user
-    // getVisitorDetailsPurpose();
-
-    if (visitorsName == "exit") {
-        return;
+    if (!getVisitorDetailsName()) {
+            return;
     }
+
+    // check if purpose is correct - 
+    purpose = prompt("Enter your purpose of coming");
+    function validatePurpose(purpose) {
+
+        pu: while (true) {
+
+            if (purpose === "") {
+                purpose = prompt("Purpose cannot be empty. Enter again (i/m/d): ");
+                continue pu;
+            }
+
+            else if (purpose == 'i' || purpose == 'm' || purpose == 'd') {
+                if (purpose == 'i')
+                {
+                    console.log(`You have enter your purpose - interview`);
+                }
+                else if  (purpose == 'm')
+                {
+                    console.log(`You have enter your purpose - meeting`);
+                }
+                else if  (purpose == 'd')
+                {
+                    console.log(`You have enter your purpose - delivery`);
+                }
+
+                console.log("You may proceed");
+                break;
+            }
+
+            else {
+                console.log("You can only enter i, m, or d");
+                continue pu;
+            }
+            
+            break;
+        }
+    };
+
+    validatePurpose(purpose);
 };
 
 loop();
+count++;
+console.log(`Number of visitors - ${count}`);
